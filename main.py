@@ -32,3 +32,22 @@ plt.ylabel('levels of cholesterol')
 plt.xlabel("age")
 plt.title("relation between age and type of chol by gender")
 plt.show()
+
+#Age for different types of chest pain
+plt.figure(figsize = (10,5))
+plot = sns.boxplot(x = "cp", y = "age", data = df)
+plot.set_title("Age  for different types of chest pain")
+plt.show()
+
+#Max heart rate achieved by age and sex
+g = sns.lmplot(x="age", y="thalach", hue="sex", data=df)
+sns.despine(left=True, bottom=True)
+plt.show()
+
+#Max heart rate achieved by age and kind
+df.plot(x="age",y="thalach",kind="scatter", c="black", marker='^',alpha= 0.9)
+plt.show()
+
+#regression for all types of cholesterol
+sns.lmplot(x="age", y="thalach", hue="sex", col="chol",data=df, height=6, aspect=.4, x_jitter=.1)
+plt.show()
