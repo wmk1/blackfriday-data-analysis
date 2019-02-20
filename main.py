@@ -39,7 +39,7 @@ plot = sns.boxplot(x = "cp", y = "age", data = df)
 plot.set_title("Age  for different types of chest pain")
 plt.show()
 
-#Max heart rate achieved by age and sex
+#Max heart rate actihieved by age and sex
 g = sns.lmplot(x="age", y="thalach", hue="sex", data=df)
 sns.despine(left=True, bottom=True)
 plt.show()
