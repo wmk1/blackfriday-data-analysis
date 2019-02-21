@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import plot_initializer as plot
+
+plot = plot.PlotInitializer()
 
 df = pd.read_csv('heart.csv')
 df.describe()
@@ -21,11 +24,8 @@ choices=['low','natural','High']
 df.chol=np.select(conditions, choices)
 df.chol.tail(5)
 
-sns.stripplot(x="chol", y="age",order=["low","natural","High"],data=df)
-plt.ylabel("age")
-plt.xlabel("levels of cholesterol")
-plt.title('relation between age and type of cholesterol')
-plt.show()
+plot.generate_strip_plot("chol", "age", df)
+
 #with hue seperate famales=0 and males=1
 sns.stripplot(x="age",y="chol",data=df,order=["High","natural","low"],hue='sex')
 plt.ylabel('levels of cholesterol')
@@ -48,6 +48,6 @@ plt.show()
 df.plot(x="age",y="thalach",kind="scatter", c="black", marker='^',alpha= 0.9)
 plt.show()
 
-#regression for all types of cholesterol
+#Regression for all types of cholesterol
 sns.lmplot(x="age", y="thalach", hue="sex", col="chol",data=df, height=6, aspect=.4, x_jitter=.1)
 plt.show()
