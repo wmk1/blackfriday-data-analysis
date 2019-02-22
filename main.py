@@ -20,21 +20,20 @@ df.info()
 
 #iniciazlia bazy
 hdRepository = HeartDiseasesRepository()
+hdRepository.createDbEntry()
 hdRepository.inserData(df)
 loadedData = hdRepository.loadDbEntrys();
 
+#machine learning data generation,learning and prediction
 mlLearning = MLearningManager()
 clf = mlLearning.predictData(loadedData)
 
-#generowanie danych do machin learningu
-
-#uczenie na wygenerowanych danych
-
-#predicate data
+#predictate data insert to data base
+hdRepository.inserData(clf)
 
 #wyplute dane oraz tabele
 
-sns.countplot(loadedData.target,hue=loadedData.sex, palette="Set3")
+sns.countplot(clf.target,hue=clf.sex, palette="Set3")
 plt.title("Count of Diseases and not")
 plt.xlabel("target")
 plt.ylabel("Count")

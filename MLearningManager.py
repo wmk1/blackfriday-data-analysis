@@ -1,5 +1,6 @@
 from sklearn import tree
 import numpy as np
+import pandas as pd
 from random import randint
 
 from util import DataTableElements
@@ -35,7 +36,7 @@ class MLearningManager(object):
     def loadPredictateData(self):
 
         dataArray = np.empty((0, 13), float)
-        for x in range(50000):
+        for x in range(10000):
             dataArray = np.append(dataArray, np.array(
                 [[randint(30, 70), randint(0, 1), randint(0, 3), randint(100 , 200), randint(177, 500),
                   randint(0, 1), randint(0, 1), randint(0, 1), randint(90, 187), randint(0, 1), randint(0, 3), randint(0, 2), randint(0,3)]]), axis=0)
@@ -44,6 +45,32 @@ class MLearningManager(object):
 
     def predictData(self, sqlData):
         clf = self.learnOnDiseaseData(sqlData)
-        clf.predict(self.loadPredictateData())
+        predicateData = self.loadPredictateData()
+        predicateResult = clf.predict(predicateData)
 
-        return clf
+        dataOnDeepLearning = self.setDataElements(predicateData, predicateResult)
+        return dataOnDeepLearning
+
+    def setDataElements(self, predicateData, predicateResult):
+
+        dataElements = pd.DataFrame({'age': [], 'sex': [], 'cp': [], 'trestbps': [],'chol': [], 'fbs': [],'restecg': [],
+                                     'thalach': [],'exang': [], 'oldpeak': [],'slope': [], 'ca': [], 'thal': [], 'target': []})
+
+        for i in range(len(predicateData)):
+            dataElements = dataElements.append({'age': predicateData[i][0],
+                                                'sex': predicateData[i][1],
+                                                'cp': predicateData[i][2],
+                                                'trestbps': predicateData[i][3],
+                                                'chol': predicateData[i][4],
+                                                'fbs': predicateData[i][5],
+                                                'restecg': predicateData[i][6],
+                                                'thalach': predicateData[i][7],
+                                                'exang': predicateData[i][8],
+                                                'oldpeak': predicateData[i][9],
+                                                'slope': predicateData[i][10],
+                                                'ca': predicateData[i][11],
+                                                'thal': predicateData[i][12],
+                                                'target': predicateResult[i],
+                                                }, ignore_index=True)
+
+        return dataElements
