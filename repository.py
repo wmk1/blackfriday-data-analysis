@@ -6,11 +6,8 @@ from util import DataTranslators, DataTableElements
 
 class HeartDiseasesRepository(object):
 
-    connectionString = ""
+    connectionString = "diseases.db"
     tableName = "disseases"
-
-    def __init__(self, connectionString):
-        self.connectionString = connectionString
 
     def createDbEntry(self):
 
